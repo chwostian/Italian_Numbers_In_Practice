@@ -7,7 +7,7 @@ target/
 # CMake
 cmake-build-*/
 
-*.fxml
+
 *.iml
 # File-based project format
 *.iws
