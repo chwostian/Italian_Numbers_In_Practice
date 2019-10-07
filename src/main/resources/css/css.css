@@ -1,0 +1,10 @@
+.technicalButtons:hover {
+    -fx-background-color: yellow;
+
+}
+/*#btConfirm {*/
+/*    -fx-background-color: RGB(146,208,80);*/
+/*}*/
+.technicalButtons {
+    -fx-effect: innershadow(three-pass-box, black, 10,0.0,0,0);
+}
