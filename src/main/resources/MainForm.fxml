@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="mainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#showMessage" prefHeight="542.0" prefWidth="562.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<AnchorPane id="AnchorPane" fx:id="mainForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#showMessage" prefHeight="542.0" prefWidth="562.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SettingController">
   <children>
       <Button id="btPractice" fx:id="btOpenSecondForm" layoutX="96.0" layoutY="487.0" mnemonicParsing="false" onAction="#openSecondForm" prefHeight="35.0" prefWidth="333.0" text="Let's move on to practice" />
       <Circle fill="#06b95f" layoutX="44.0" layoutY="136.0" radius="36.0" stroke="#03972d" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" />
