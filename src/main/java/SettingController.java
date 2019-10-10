@@ -27,6 +27,7 @@ public class SettingController extends Window {
 
     static String stxtFrom;
     static String stxtTo;
+    static String stxtGroupLevelOfCommand;
 
     @FXML
     private TextField txtPath;
@@ -75,8 +76,10 @@ public class SettingController extends Window {
         stage.setResizable(false);
         stage.setScene(new Scene(root1));
         stage.initModality(Modality.APPLICATION_MODAL);
+        RadioButton radioButton = (RadioButton) this.groupLevelOfCommand.getSelectedToggle();
         stxtFrom = this.txtFrom.getText();
         stxtTo = this.txtTo.getText();
+        stxtGroupLevelOfCommand = radioButton.getText();
         stage.show();
 
     }

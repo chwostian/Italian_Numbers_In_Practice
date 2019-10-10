@@ -22,6 +22,7 @@ public class Randomize {
     public void setRandomLong(Long lBound, Long uBound) {
 
         this.randomLong = ThreadLocalRandom.current().nextLong(lBound,uBound);
+
     }
 
     public Boolean getNumberHasBeenPlayed() {
