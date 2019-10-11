@@ -9,6 +9,7 @@ import javafx.stage.Window;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LearningController extends Window {
 
@@ -55,7 +56,7 @@ public class LearningController extends Window {
                     Optional<Randomize> firstResult = luckyNumbers.stream().filter(s -> s.getNumberHasBeenPlayed().equals(false)).findFirst();
                     if (firstResult.isPresent()) {
                         firstResult.get().setNumberHasBeenPlayed(true);
-                        playLuckyNumbers(954278316000L);
+                        playLuckyNumbers(firstResult.get().getRandomLong());
                         System.out.println(firstResult.get().getRandomLong());
                     } else {
                         luckyNumbers.clear();
@@ -119,14 +120,14 @@ public class LearningController extends Window {
     private void playLuckyNumbers(Long randomLong) throws MalformedURLException {
         final String str = "src/main/resources/media/";
         ArrayList<String> list = new ArrayList();
-        final String bilione = "1000000000000.mp3";
-        final String bilioni = "1000000000000_1.mp3";
-        final String miliardo = "1000000000.mp3";
-        final String miliardi = "1000000000_1.mp3";
-        final String milione = "1000000.mp3";
-        final String milioni = "1000000_1.mp3";
-        final String mille = "1000.mp3";
-        final String mila = "1000_1.mp3";
+        final String bilione = "bilione.mp3";
+        final String bilioni = "bilioni.mp3";
+        final String miliardo = "miliardo.mp3";
+        final String miliardi = "miliardi.mp3";
+        final String milione = "milione.mp3";
+        final String milioni = "milioni.mp3";
+        final String mille = "mille.mp3";
+        final String mila = "mila.mp3";
         final String cento = "100.mp3";
 
         Integer luckyNumbersLength = randomLong.toString().length();
@@ -143,8 +144,7 @@ public class LearningController extends Window {
                 case 1:
                     sParam1 = mille;
                     sParam2 = mila;
-                    sParam3 = cento;
-                    sParam4 = cento;
+
                     break;
                 case 2:
                     sParam1 = milione;
@@ -195,11 +195,19 @@ public class LearningController extends Window {
                 }
             }
 
+            sParam1="";
+            sParam2="";
+            sParam3="";
+            sParam4="";
+
         }
 
 
-            Vector v = new Vector();
-            list.forEach(s->{
+            List<String> filteredList = list.stream()
+                    .filter(s->s.contains("mp3"))
+                    .collect(Collectors.toList());
+
+            filteredList.forEach(s->{
 
                 try {
                     audioClip = new AudioClip(new File(s).toURI().toURL().toString());
