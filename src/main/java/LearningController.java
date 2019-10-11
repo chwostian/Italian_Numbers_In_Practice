@@ -6,11 +6,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Window;
 
-import java.io.File;
+import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 
 public class LearningController extends Window {
 
@@ -34,7 +32,7 @@ public class LearningController extends Window {
 
     public static HashSet<Randomize> luckyNumbers = new HashSet();
 
-    public void buttonClicked(ActionEvent actionEvent) {
+    public void buttonClicked(ActionEvent actionEvent) throws MalformedURLException {
 
         Button bt = (Button) actionEvent.getSource();
 
@@ -57,8 +55,8 @@ public class LearningController extends Window {
                     Optional<Randomize> firstResult = luckyNumbers.stream().filter(s -> s.getNumberHasBeenPlayed().equals(false)).findFirst();
                     if (firstResult.isPresent()) {
                         firstResult.get().setNumberHasBeenPlayed(true);
+                        playLuckyNumbers(954278316000L);
                         System.out.println(firstResult.get().getRandomLong());
-
                     } else {
                         luckyNumbers.clear();
                         Alert newAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -118,73 +116,110 @@ public class LearningController extends Window {
         return uBound;
     }
 
-    private void playLuckyNumbers(Long number) throws MalformedURLException {
-        StringBuilder str = new StringBuilder();
-        URL path = null;
+    private void playLuckyNumbers(Long randomLong) throws MalformedURLException {
+        final String str = "src/main/resources/media/";
+        ArrayList<String> list = new ArrayList();
+        final String bilione = "1000000000000.mp3";
+        final String bilioni = "1000000000000_1.mp3";
+        final String miliardo = "1000000000.mp3";
+        final String miliardi = "1000000000_1.mp3";
+        final String milione = "1000000.mp3";
+        final String milioni = "1000000_1.mp3";
+        final String mille = "1000.mp3";
+        final String mila = "1000_1.mp3";
+        final String cento = "100.mp3";
 
-        switch (number.toString().length()) {
-            case 1:
-                //ones
-                break;
-            case 2:
-                //tens
-                break;
-            case 3:
-                //hundreds
-                break;
-            case 4:
-                //thousands
-                break;
-            case 5:
-                //thousands
-                break;
-            case 6:
-                //thousands
-                break;
-            case 7:
-                //milions
-                break;
-            case 8:
-                //milions
-                break;
-            case 9:
-                //milions
-                break;
-            case 10:
-                //bilions
-                break;
-            case 11:
-                //bilions
-                break;
-            case 12:
-                //billions
-                break;
-            case 13:
-                //trilions
-                break;
+        Integer luckyNumbersLength = randomLong.toString().length();
+        Integer fullThreeDigitRanges = luckyNumbersLength/3;
+        Integer extraLength = luckyNumbersLength - fullThreeDigitRanges*3;
+
+        String sParam1="";
+        String sParam2="";
+        String sParam3="";
+        String sParam4="";
+
+        for (int i = fullThreeDigitRanges; i>0; i--) {
+            switch (i) {
+                case 1:
+                    sParam1 = mille;
+                    sParam2 = mila;
+                    sParam3 = cento;
+                    sParam4 = cento;
+                    break;
+                case 2:
+                    sParam1 = milione;
+                    sParam2 = milioni;
+                    sParam3 = mila;
+                    sParam4 = mille;
+                    break;
+                case 3:
+                    sParam1 = miliardo;
+                    sParam2 = miliardi;
+                    sParam3 = milioni;
+                    sParam4 = milione;
+                    break;
+                case 4:
+                    sParam1 = bilione;
+                    sParam2 = bilioni;
+                    sParam3 = miliardi;
+                    sParam4 = miliardo;
+                    break;
+
+            }
+
+            if (extraLength>0 && i == fullThreeDigitRanges) {
+                String extraNumber = randomLong.toString().substring(0, extraLength);
+                if (Integer.parseInt(extraNumber) == 1) {
+                    list.add(str + sParam1);
+                } else {
+                    list.add(str + extraNumber + ".mp3");
+                    list.add(str + sParam2);
+                }
+            }
+
+            Integer currentRange = Integer.parseInt(randomLong.toString().substring(luckyNumbersLength-i*3, luckyNumbersLength-i*3+3));
+
+            if (currentRange > 0) {
+                if (currentRange > 1 && currentRange < 101) {
+                    list.add(str + currentRange.toString() + ".mp3");
+                    list.add(str + sParam3);
+                } else if (currentRange > 100) {
+                    list.add(str + String.valueOf(currentRange/100*100) + ".mp3");
+                    if ((currentRange - currentRange/100*100) > 0) {
+                        list.add(str + String.valueOf(currentRange - currentRange / 100 * 100) + ".mp3");
+                        list.add(str + sParam3);
+                    }
+
+                } else if (currentRange == 1) {
+                    list.add(str + sParam4);
+                }
+            }
 
         }
 
 
+            Vector v = new Vector();
+            list.forEach(s->{
+
+                try {
+                    audioClip = new AudioClip(new File(s).toURI().toURL().toString());
+                    audioClip.play();
+                    while (audioClip.isPlaying()) {
+                        ;
+                    }
 
 
 
-        for (int i=1; i<4; i++){
-            str = new StringBuilder();
-            str.append("src/main/resources/media/");
-            str.append(i);
-            str.append("00");
-            str.append(".mp3");
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
 
-            path = new File(str.toString()).toURI().toURL();
 
-            audioClip = new AudioClip(path.toString());
-            audioClip.play();
-            while (audioClip.isPlaying()) {
-                ;
-            }
+
+            });
+
 
         }
     }
 
-}
+
