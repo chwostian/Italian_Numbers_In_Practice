@@ -1,7 +1,9 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Window;
@@ -14,7 +16,9 @@ import java.util.stream.Collectors;
 public class LearningController extends Window {
 
     @FXML
-    TextField txtField;
+    private Group groupedPlayRepeatButtons;
+    @FXML
+    private TextField txtField;
 
     @FXML
     private Button btBackspace;
@@ -30,6 +34,9 @@ public class LearningController extends Window {
 
     @FXML
     private Button btPlay;
+
+    @FXML
+    private Label lblRandomLong;
 
     public static HashSet<Randomize> luckyNumbers = new HashSet();
 
@@ -49,22 +56,28 @@ public class LearningController extends Window {
                     break;
                 case "btStart":
                     bt.setDisable(true);
+                    groupedPlayRepeatButtons.setDisable(false);
                     startLearning();
                     break;
                 case "btPlay":
-                    luckyNumbers.stream().forEach(s -> System.out.println(s.getRandomLong()));
                     Optional<Randomize> firstResult = luckyNumbers.stream().filter(s -> s.getNumberHasBeenPlayed().equals(false)).findFirst();
                     if (firstResult.isPresent()) {
                         firstResult.get().setNumberHasBeenPlayed(true);
                         playLuckyNumbers(firstResult.get().getRandomLong());
-                        System.out.println(firstResult.get().getRandomLong());
+                        lblRandomLong.setText(firstResult.get().getRandomLong().toString());
                     } else {
                         luckyNumbers.clear();
                         Alert newAlert = new Alert(Alert.AlertType.INFORMATION);
                         newAlert.setHeaderText("Skończyły się liczby");
                         newAlert.show();
                         btStart.setDisable(false);
+                        groupedPlayRepeatButtons.setDisable(false);
 
+                    }
+                    break;
+                case "btRepeat":
+                    if (lblRandomLong.getText().length() != 0) {
+                        playLuckyNumbers(Long.parseLong(lblRandomLong.getText()));
                     }
                     break;
             }

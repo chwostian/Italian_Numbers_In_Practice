@@ -3,9 +3,9 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -138,18 +138,13 @@
             <Font size="24.0" />
          </font>
       </TextField>
-      <Group id="groupedPausePlayStopButtons" layoutX="102.0" layoutY="47.0">
+      <Group id="groupedPlayRepeatButtons" fx:id="groupedPlayRepeatButtons" disable="true" layoutX="71.0" layoutY="48.0">
          <children>
-            <ToggleButton mnemonicParsing="false" prefHeight="39.0" prefWidth="50.0" text="⏸">
+            <Button fx:id="btRepeat" layoutX="124.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="39.0" text="🔄">
                <font>
                   <Font size="18.0" />
                </font>
-            </ToggleButton>
-            <ToggleButton layoutX="124.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="50.0" text="⏹">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </ToggleButton>
+            </Button>
             <Button fx:id="btPlay" layoutX="66.0" mnemonicParsing="false" onAction="#buttonClicked" text="⏵">
                <font>
                   <Font size="18.0" />
@@ -157,6 +152,7 @@
             </Button>
          </children>
       </Group>
+      <Label fx:id="lblRandomLong" layoutX="29.0" layoutY="39.0" />
 
    </children>
 </AnchorPane>
