@@ -4,7 +4,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Randomize {
     private Long randomLong;
-    private Boolean numberHasBeenPlayed;
     private Boolean answerWasCorrect;
 
     public Randomize() {
@@ -12,7 +11,7 @@ public class Randomize {
 
     public Randomize(Long lBound, Long uBound) {
         this.randomLong = ThreadLocalRandom.current().nextLong(lBound,uBound);
-        this.numberHasBeenPlayed = false;
+        this.answerWasCorrect = false;
     }
 
     public Long getRandomLong() {
@@ -23,14 +22,6 @@ public class Randomize {
 
         this.randomLong = ThreadLocalRandom.current().nextLong(lBound,uBound);
 
-    }
-
-    public Boolean getNumberHasBeenPlayed() {
-        return numberHasBeenPlayed;
-    }
-
-    public void setNumberHasBeenPlayed(Boolean numberHasBeenPlayed) {
-        this.numberHasBeenPlayed = numberHasBeenPlayed;
     }
 
     public Boolean getAnswerWasCorrect() {

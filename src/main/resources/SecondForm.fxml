@@ -8,10 +8,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LearningController">
+<AnchorPane fx:id="anchorePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LearningController">
    <children>
       <Group fx:id="groupedButtons" layoutX="8.0" layoutY="159.0" onMouseClicked="#buttonClicked">
          <children>
@@ -94,7 +96,7 @@
                   </Tooltip>
                </tooltip>
             </Button>
-            <Button id="btConfirm" contentDisplay="CENTER" layoutX="93.0" layoutY="252.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="70.0" prefWidth="173.0" styleClass="technicalButtons" stylesheets="@css/css.css" text="✔" textOverrun="LEADING_WORD_ELLIPSIS">
+            <Button id="btConfirm" fx:id="btConfirm" contentDisplay="CENTER" layoutX="93.0" layoutY="252.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="70.0" prefWidth="173.0" styleClass="technicalButtons" stylesheets="@css/css.css" text="✔" textOverrun="LEADING_WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -138,21 +140,27 @@
             <Font size="24.0" />
          </font>
       </TextField>
-      <Group id="groupedPlayRepeatButtons" fx:id="groupedPlayRepeatButtons" disable="true" layoutX="71.0" layoutY="48.0">
+      <Group id="groupedPlayRepeatButtons" fx:id="groupedPlayRepeatButtons" disable="true" layoutX="104.0" layoutY="48.0">
          <children>
             <Button fx:id="btRepeat" layoutX="124.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="39.0" text="🔄">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btPlay" layoutX="66.0" mnemonicParsing="false" onAction="#buttonClicked" text="⏵">
+            <ImageView fx:id="imgSound" fitHeight="40.0" fitWidth="67.0" layoutX="50.0" pickOnBounds="true">
+               <image>
+                  <Image url="@ezgif.com-gif-maker.gif" />
+               </image>
+            </ImageView>
+            <Button fx:id="btPlay" mnemonicParsing="false" onAction="#buttonClicked" text="⏵">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
          </children>
       </Group>
-      <Label fx:id="lblRandomLong" layoutX="29.0" layoutY="39.0" />
+      <Label fx:id="lblRandomLong" layoutX="154.0" layoutY="6.0" prefHeight="17.0" prefWidth="67.0" text="fsdfsdfdsfsdf" />
+      <Label fx:id="lblItemCounter" layoutX="297.0" layoutY="23.0" text="1 of 20" />
 
    </children>
 </AnchorPane>

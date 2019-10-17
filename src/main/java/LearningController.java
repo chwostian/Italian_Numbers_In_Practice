@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Window;
 
@@ -13,8 +14,12 @@ import java.net.MalformedURLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.Character.SPACE_SEPARATOR;
+
 public class LearningController extends Window {
 
+    @FXML
+    private ImageView imgSound;
     @FXML
     private Group groupedPlayRepeatButtons;
     @FXML
@@ -24,10 +29,15 @@ public class LearningController extends Window {
     private Button btBackspace;
 
     @FXML
+    private Button btRepeat;
+    @FXML
     private Button btStart;
 
     @FXML
     private Button btClear;
+
+    @FXML
+    private Button btConfirm;
 
     @FXML
     private AudioClip audioClip;
@@ -38,8 +48,14 @@ public class LearningController extends Window {
     @FXML
     private Label lblRandomLong;
 
+    @FXML
+    private Label lblItemCounter;
+
     public static HashSet<Randomize> luckyNumbers = new HashSet();
 
+    public void initialize() {
+        lblRandomLong.setVisible(false);
+    }
     public void buttonClicked(ActionEvent actionEvent) throws MalformedURLException {
 
         Button bt = (Button) actionEvent.getSource();
@@ -48,6 +64,22 @@ public class LearningController extends Window {
             txtField.setText(txtField.getText() + bt.getText());
         } else {
             switch (bt.getId()) {
+                case "btConfirm":
+                    if (txtField.getText().equals(lblRandomLong.getText())) {
+                        luckyNumbers.forEach(r->{
+                           if (r.getRandomLong().equals(Long.parseLong(lblRandomLong.getText()))) {
+                               r.setAnswerWasCorrect(true);
+                               txtField.clear();
+                               lblRandomLong.setText(null);
+                               btRepeat.setDisable(true);
+                           }
+                       });
+
+
+                    } else {
+
+                    }
+                    break;
                 case "btBackspace":
                     txtField.setText(txtField.getText(0, Math.max(0, txtField.getLength() - 1)));
                     break;
@@ -60,11 +92,14 @@ public class LearningController extends Window {
                     startLearning();
                     break;
                 case "btPlay":
-                    Optional<Randomize> firstResult = luckyNumbers.stream().filter(s -> s.getNumberHasBeenPlayed().equals(false)).findFirst();
+                    Optional<Randomize> firstResult = luckyNumbers.stream().filter(s -> s.getAnswerWasCorrect().equals(false)).findAny();
                     if (firstResult.isPresent()) {
-                        firstResult.get().setNumberHasBeenPlayed(true);
                         playLuckyNumbers(firstResult.get().getRandomLong());
                         lblRandomLong.setText(firstResult.get().getRandomLong().toString());
+                        btRepeat.setDisable(false);
+                        String textToSetForLabel = String.valueOf(luckyNumbers.stream().filter(s -> s.getAnswerWasCorrect().equals(true)).count()+1);
+                        textToSetForLabel+= " of " + luckyNumbers.size();
+                        lblItemCounter.setText(textToSetForLabel);
                     } else {
                         luckyNumbers.clear();
                         Alert newAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -143,9 +178,9 @@ public class LearningController extends Window {
         final String mila = "mila.mp3";
         final String cento = "100.mp3";
 
-        Integer luckyNumbersLength = randomLong.toString().length();
-        Integer fullThreeDigitRanges = luckyNumbersLength/3;
-        Integer extraLength = luckyNumbersLength - fullThreeDigitRanges*3;
+        int luckyNumbersLength = randomLong.toString().length();
+        int fullThreeDigitRanges = luckyNumbersLength/3;
+        int extraLength = luckyNumbersLength - fullThreeDigitRanges*3;
 
         String sParam1="";
         String sParam2="";
@@ -190,11 +225,11 @@ public class LearningController extends Window {
                 }
             }
 
-            Integer currentRange = Integer.parseInt(randomLong.toString().substring(luckyNumbersLength-i*3, luckyNumbersLength-i*3+3));
+            int currentRange = Integer.parseInt(randomLong.toString().substring(luckyNumbersLength-i*3, luckyNumbersLength-i*3+3));
 
             if (currentRange > 0) {
                 if (currentRange > 1 && currentRange < 101) {
-                    list.add(str + currentRange.toString() + ".mp3");
+                    list.add(str + currentRange + ".mp3");
                     list.add(str + sParam3);
                 } else if (currentRange > 100) {
                     list.add(str + String.valueOf(currentRange/100*100) + ".mp3");
@@ -215,20 +250,20 @@ public class LearningController extends Window {
 
         }
 
-
+        if (fullThreeDigitRanges == 0) {
+            list.add(str + randomLong + ".mp3");
+        }
             List<String> filteredList = list.stream()
                     .filter(s->s.contains("mp3"))
                     .collect(Collectors.toList());
-
             filteredList.forEach(s->{
 
                 try {
                     audioClip = new AudioClip(new File(s).toURI().toURL().toString());
                     audioClip.play();
                     while (audioClip.isPlaying()) {
-                        ;
+                        //Wait until the clip has finished playing
                     }
-
 
 
                 } catch (MalformedURLException e) {
@@ -238,7 +273,6 @@ public class LearningController extends Window {
 
 
             });
-
 
         }
     }

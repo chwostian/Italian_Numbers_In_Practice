@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
@@ -28,7 +29,8 @@ public class SettingController extends Window {
     static String stxtFrom;
     static String stxtTo;
     static String stxtGroupLevelOfCommand;
-
+    @FXML
+    private ImageView imgSound;
     @FXML
     private TextField txtPath;
 
@@ -86,6 +88,7 @@ public class SettingController extends Window {
 
     @FXML
     void initialize() {
+
         assert mainForm != null : "fx:id=\"mainForm\" was not injected: check your FXML file 'MainForm.fxml'.";
 
 

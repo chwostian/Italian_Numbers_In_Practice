@@ -50,11 +50,11 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Text>
-      <TextField fx:id="txtFrom" alignment="CENTER" layoutX="95.0" layoutY="357.0" promptText="From" text="0" />
-      <TextField fx:id="txtTo" alignment="CENTER" layoutX="279.0" layoutY="357.0" promptText="To" text="1000" />
-      <Label layoutX="96.0" layoutY="330.0" text="Provide a range of integers you want to practice" textFill="#141414" />
+      <TextField fx:id="txtFrom" alignment="CENTER" disable="true" editable="false" layoutX="95.0" layoutY="357.0" promptText="From" text="0" />
+      <TextField fx:id="txtTo" alignment="CENTER" disable="true" editable="false" layoutX="279.0" layoutY="357.0" promptText="To" text="1000" />
+      <Label layoutX="96.0" layoutY="330.0" text="A range of numbers you  will practice" textFill="#141414" />
       <Label layoutX="96.0" layoutY="392.0" prefHeight="62.0" prefWidth="451.0" text="Playback speed dependent on your level of command of Italian expressed as the percentage of regular speed for advanced level. Typical value for beginners is 75% of the regular speed, intermediate - 90%, advanced - 100%" textFill="#141414" wrapText="true" />
-      <TextField fx:id="txtPlaybackSpeed" alignment="CENTER" layoutX="95.0" layoutY="454.0" text="75%" />
+      <TextField fx:id="txtPlaybackSpeed" alignment="CENTER" disable="true" editable="false" layoutX="95.0" layoutY="454.0" text="75%" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="124.0" layoutY="-7.0" prefHeight="43.0" prefWidth="137.0" text="Settings">
          <font>
             <Font name="System Bold" size="24.0" />
