@@ -5,3 +5,11 @@
 .technicalButtons {
     -fx-effect: innershadow(three-pass-box, black, 10,0.0,0,0);
 }
+
+.correct {
+    -fx-background-color: #00ff00;
+}
+
+.incorrect {
+    -fx-background-color: #ffffff;
+}

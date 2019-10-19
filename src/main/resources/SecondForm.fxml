@@ -15,6 +15,11 @@
 
 <AnchorPane fx:id="anchorePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LearningController">
    <children>
+      <ImageView fx:id="thumbsup" fitHeight="102.0" fitWidth="103.0" layoutX="-4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@thumbsup.gif" />
+         </image>
+      </ImageView>
       <Group fx:id="groupedButtons" layoutX="8.0" layoutY="159.0" onMouseClicked="#buttonClicked">
          <children>
             <Button contentDisplay="CENTER" layoutX="274.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="70.0" prefWidth="84.0" text="9" textOverrun="LEADING_WORD_ELLIPSIS">
@@ -135,7 +140,7 @@
             </Button>
          </children>
       </Group>
-      <TextField id="txtField" fx:id="txtField" alignment="CENTER" layoutX="8.0" layoutY="101.0" prefHeight="44.0" prefWidth="358.0" promptText="Put the number you hear">
+      <TextField id="txtField" fx:id="txtField" alignment="CENTER" layoutX="8.0" layoutY="101.0" prefHeight="44.0" prefWidth="358.0" promptText="Put the number you hear" stylesheets="@css/css.css">
          <font>
             <Font size="24.0" />
          </font>
@@ -160,7 +165,12 @@
          </children>
       </Group>
       <Label fx:id="lblRandomLong" layoutX="154.0" layoutY="6.0" prefHeight="17.0" prefWidth="67.0" text="fsdfsdfdsfsdf" />
-      <Label fx:id="lblItemCounter" layoutX="297.0" layoutY="23.0" text="1 of 20" />
+      <Label fx:id="lblItemCounter" layoutX="169.0" layoutY="31.0" text="1 of 20" />
+      <ImageView fx:id="thumbsdown" fitHeight="102.0" fitWidth="95.0" layoutX="277.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@thumbsup.gif" />
+         </image>
+      </ImageView>
 
    </children>
 </AnchorPane>

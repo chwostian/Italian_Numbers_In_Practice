@@ -1,3 +1,5 @@
+import javafx.animation.FadeTransition;
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -8,16 +10,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.MalformedURLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.lang.Character.SPACE_SEPARATOR;
-
 public class LearningController extends Window {
 
+    final String NOTHING_TO_PROCESS = "nothing to process";
+
+    @FXML
+    private ImageView thumbsdown;
+    @FXML
+    private ImageView thumbsup;
     @FXML
     private ImageView imgSound;
     @FXML
@@ -55,8 +62,11 @@ public class LearningController extends Window {
 
     public void initialize() {
         lblRandomLong.setVisible(false);
+        lblRandomLong.setText(NOTHING_TO_PROCESS);
+        thumbsdown.setVisible(false);
+        thumbsup.setVisible(false);
     }
-    public void buttonClicked(ActionEvent actionEvent) throws MalformedURLException {
+    public void buttonClicked(ActionEvent actionEvent) throws MalformedURLException, InterruptedException {
 
         Button bt = (Button) actionEvent.getSource();
 
@@ -65,20 +75,20 @@ public class LearningController extends Window {
         } else {
             switch (bt.getId()) {
                 case "btConfirm":
-                    if (txtField.getText().equals(lblRandomLong.getText())) {
+                    if (txtField.getText().equals(lblRandomLong.getText()) && !txtField.getText().equals("")) {
                         luckyNumbers.forEach(r->{
                            if (r.getRandomLong().equals(Long.parseLong(lblRandomLong.getText()))) {
                                r.setAnswerWasCorrect(true);
                                txtField.clear();
-                               lblRandomLong.setText(null);
                                btRepeat.setDisable(true);
                            }
                        });
+                        shakeTextField(false);
 
-
-                    } else {
-
+                    } else if (!txtField.getText().equals(lblRandomLong.getText()) && !txtField.getText().equals("")) {
+                        shakeTextField(true);
                     }
+                        lblRandomLong.setText(NOTHING_TO_PROCESS);
                     break;
                 case "btBackspace":
                     txtField.setText(txtField.getText(0, Math.max(0, txtField.getLength() - 1)));
@@ -111,7 +121,7 @@ public class LearningController extends Window {
                     }
                     break;
                 case "btRepeat":
-                    if (lblRandomLong.getText().length() != 0) {
+                    if (lblRandomLong.getText() != NOTHING_TO_PROCESS) {
                         playLuckyNumbers(Long.parseLong(lblRandomLong.getText()));
                     }
                     break;
@@ -165,6 +175,39 @@ public class LearningController extends Window {
         return uBound;
     }
 
+    private void shakeTextField(Boolean shakeIt)  {
+
+            if (shakeIt == true) {
+                thumbsdown.setVisible(true);
+                thumbsup.setVisible(false);
+
+                FadeTransition ft = new FadeTransition(Duration.millis(6000), thumbsdown);
+                ft.setFromValue(1.0);
+                ft.setToValue(0.0);
+                ft.play();
+
+                RotateTransition rotateTransition = new RotateTransition();
+                txtField.setStyle("-fx-background-color: red");
+                rotateTransition.setDuration(Duration.millis(50));
+                rotateTransition.setByAngle(5);
+                rotateTransition.setCycleCount(30);
+                rotateTransition.setAutoReverse(true);
+                rotateTransition.setNode(txtField);
+                rotateTransition.play();
+
+            } else {
+                txtField.setStyle("-fx-background-color: white");
+                thumbsdown.setVisible(false);
+                thumbsup.setVisible(true);
+
+                FadeTransition ft = new FadeTransition(Duration.millis(6000), thumbsup);
+                ft.setFromValue(1.0);
+                ft.setToValue(0.0);
+                ft.play();
+            }
+
+    }
+
     private void playLuckyNumbers(Long randomLong) throws MalformedURLException {
         final String str = "src/main/resources/media/";
         ArrayList<String> list = new ArrayList();
@@ -177,6 +220,8 @@ public class LearningController extends Window {
         final String mille = "mille.mp3";
         final String mila = "mila.mp3";
         final String cento = "100.mp3";
+
+
 
         int luckyNumbersLength = randomLong.toString().length();
         int fullThreeDigitRanges = luckyNumbersLength/3;
@@ -260,21 +305,22 @@ public class LearningController extends Window {
 
                 try {
                     audioClip = new AudioClip(new File(s).toURI().toURL().toString());
-                    audioClip.play();
-                    while (audioClip.isPlaying()) {
-                        //Wait until the clip has finished playing
-                    }
+
+
+                        audioClip.play();
+                        while (audioClip.isPlaying()) {
+                            //Wait until the clip has finished playing
+                        }
 
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
 
-
-
             });
-
         }
+
+
     }
 
 
