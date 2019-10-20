@@ -103,6 +103,8 @@ public class LearningController extends Window {
                     break;
                 case "btPlay":
                     Optional<Randomize> firstResult = luckyNumbers.stream().filter(s -> s.getAnswerWasCorrect().equals(false)).findAny();
+                    txtField.setStyle("");
+
                     if (firstResult.isPresent()) {
                         playLuckyNumbers(firstResult.get().getRandomLong());
                         lblRandomLong.setText(firstResult.get().getRandomLong().toString());
@@ -187,7 +189,7 @@ public class LearningController extends Window {
                 ft.play();
 
                 RotateTransition rotateTransition = new RotateTransition();
-                txtField.setStyle("-fx-background-color: red");
+                txtField.setStyle("-fx-background-color: #ff0000");
                 rotateTransition.setDuration(Duration.millis(50));
                 rotateTransition.setByAngle(5);
                 rotateTransition.setCycleCount(30);
@@ -196,7 +198,7 @@ public class LearningController extends Window {
                 rotateTransition.play();
 
             } else {
-                txtField.setStyle("-fx-background-color: white");
+                txtField.setStyle("-fx-background-color: #008000");
                 thumbsdown.setVisible(false);
                 thumbsup.setVisible(true);
 
